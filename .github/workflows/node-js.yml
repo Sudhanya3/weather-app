@@ -50,3 +50,12 @@ jobs:
         curl -I http://localhost:3000/api/getApiKey
         curl -I http://127.0.0.1:8080
 
+
+    # Adding deployment step
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages  # Target branch for GitHub Pages
+        folder: public     # Folder containing the static files
+
+
