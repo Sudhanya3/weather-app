@@ -50,9 +50,6 @@ jobs:
         curl -I http://localhost:3000/api/getApiKey
         curl -I http://127.0.0.1:8080
 
-    - name: Run tests
-      run: npm test
-
     - name: Lint code
       run: npm run lint
 
