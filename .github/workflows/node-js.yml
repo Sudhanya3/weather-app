@@ -1,0 +1,58 @@
+name: Node.js Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Step 2: Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    # Step 3: Installing project dependencies
+    - name: Install dependencies
+      run: |
+        npm install
+        npm install express dotenv cors
+
+    # Step 4: Install http-server globally
+    - name: Install http-server
+      run: npm install -g http-server
+
+    # Step 5: Start backend server
+    - name: Start backend server
+      run: |
+        echo "API_KEY=${{ secrets.API_KEY }}" >> .env
+        node backend/server.js &
+
+    # Step 6: Start frontend server
+    - name: Start frontend server
+      run: |
+        http-server -p 8080 &
+
+    # Step 7: Verify servers are running
+    - name: Verify servers
+      run: |
+        curl -I http://localhost:3000/api/getApiKey
+        curl -I http://127.0.0.1:8080
+
+    - name: Run tests
+      run: npm test
+
+    - name: Lint code
+      run: npm run lint
+
