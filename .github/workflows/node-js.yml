@@ -37,12 +37,12 @@ jobs:
     - name: Start backend server
       run: |
         echo "API_KEY=${{ secrets.API_KEY }}" >> .env
-        node backend/server.js &
+        nohup node backend/server.js &
 
     # Step 6: Start frontend server
     - name: Start frontend server
       run: |
-        http-server -p 8080 &
+        nohup http-server -p 8080 &
 
     # Step 7: Verify servers are running
     - name: Verify servers
