@@ -10,7 +10,9 @@ on:
 
 jobs:
   build-and-run:
-    runs-on: ubuntu-latest
+    runs-on: 
+      - self-hosted
+      - label-1
 
     steps:
     # Step 1: Checkout repository
