@@ -29,7 +29,9 @@ jobs:
     - 
       name: Build Docker image
       run: |
-        docker build -t ${{ secrets.DOCKER_USER }}/weather-app:latest .
+        export DOCKER_BUILDKIT=1
+        echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+        docker build --secret id=env,src=.env -t ${{ secrets.DOCKER_USER }}/my-app:latest .
 
     -
       name: Push Docker Image

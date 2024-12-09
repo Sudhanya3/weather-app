@@ -4,8 +4,6 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-COPY .env .env
-
 RUN npm install
 
 RUN npm install express dotenv cors
@@ -13,6 +11,8 @@ RUN npm install express dotenv cors
 RUN npm install -g http-server
 
 COPY . .
+
+RUN --mount=type=secret,id=env cp /run/secrets/env .env
 
 EXPOSE 8080
 EXPOSE 3000
