@@ -54,8 +54,7 @@ jobs:
     -
       name: Run docker container
       run: |
-      d
-      # -d --name weather-app-latest -p 8080:8080 ${{ secrets.DOCKER_USER }}/weather-app:latest
+        docker run -d -p 3000:3000 -p 8080:8080 --name weather-app-latest ${{ secrets.DOCKER_USER }}/weather-app:latest
   
 
   docker-image-push:
