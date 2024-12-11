@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  checkout:
+  checkout-repository:
     runs-on: 
       - self-hosted
       - label-1
@@ -32,7 +32,7 @@ jobs:
         username: ${{ secrets.DOCKER_USER}}
         password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-  docker-image-build:
+  docker-build-and-deploy:
     runs-on: 
       - self-hosted
       - label-1
@@ -45,24 +45,12 @@ jobs:
         echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
         docker build --secret id=env,src=.env -t ${{ secrets.DOCKER_USER }}/weather-app:latest .
 
-  docker-run:
-    runs-on:
-      - self-hosted
-      - label-1
-
-    steps:
     -
       name: Run docker container
       run: |
         docker run -d -p 3000:3000 -p 8080:8080 --name weather-app-latest ${{ secrets.DOCKER_USER }}/weather-app:latest
   
 
-  docker-image-push:
-    runs-on: 
-      - self-hosted
-      - label-1
-
-    steps:
     -
       name: Push Docker Image
       run: |
