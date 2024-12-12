@@ -12,8 +12,6 @@ RUN npm install -g http-server
 
 COPY . .
 
-RUN --mount=type=secret,id=env cp /run/secrets/env .env
-
 EXPOSE 8080
 EXPOSE 3000
 
