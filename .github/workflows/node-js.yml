@@ -9,20 +9,22 @@ on:
       - main
 
 jobs:
-  checkout-repository:
+  checkout-repo:
     runs-on: 
       - self-hosted
       - label-1
 
     steps:
     - 
-      name: Checkout repository
+      name: Checkout repo
       uses: actions/checkout@v4
   
   docker-login:
     runs-on: 
       - self-hosted
       - label-1
+
+    needs: checkout-repo
 
     steps:
     - 
@@ -32,10 +34,12 @@ jobs:
         username: ${{ secrets.DOCKER_USER}}
         password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-  docker-build-and-deploy:
+  docker-build:
     runs-on: 
       - self-hosted
       - label-1
+
+    needs: docker-login
 
     steps:
     - 
@@ -44,13 +48,28 @@ jobs:
         export DOCKER_BUILDKIT=1
         echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
         docker build --secret id=env,src=.env -t ${{ secrets.DOCKER_USER }}/weather-app:latest .
+  
+  docker-run:
+    runs-on: 
+      - self-hosted
+      - label-1
 
+    needs: docker-build
+
+    steps:      
     -
       name: Run docker container
       run: |
         docker run -d -p 3000:3000 -p 8080:8080 --name weather-app-latest ${{ secrets.DOCKER_USER }}/weather-app:latest
   
+  docker-push:
+    runs-on: 
+      - self-hosted
+      - label-1
 
+    needs: docker-run
+
+    steps:
     -
       name: Push Docker Image
       run: |
