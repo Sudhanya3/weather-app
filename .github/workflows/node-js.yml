@@ -66,7 +66,7 @@ jobs:
       - self-hosted
       - label-1
 
-    needs: docker-run
+    needs: docker-build
 
     steps:
     -
