@@ -48,7 +48,7 @@ jobs:
         export DOCKER_BUILDKIT=1
         docker build -t ${{ secrets.DOCKER_USER }}/weather-app-1 .
   
-  docker-run:
+  docker-run-and-push:
     runs-on: 
       - self-hosted
       - label-1
@@ -61,14 +61,6 @@ jobs:
       run: |
         docker run -d -e API_KEY=${{ secrets.API_KEY }} -p 3000:3000 -p 8080:8080 --name weather-app-new ${{ secrets.DOCKER_USER }}/weather-app-1
   
-  docker-push:
-    runs-on: 
-      - self-hosted
-      - label-1
-
-    needs: docker-build
-
-    steps:
     -
       name: Push Docker Image
       run: |
