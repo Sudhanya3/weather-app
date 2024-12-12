@@ -59,7 +59,7 @@ jobs:
     -
       name: Run docker container
       run: |
-        docker run -d -e API_KEY = ${{ secrets.API_KEY }} -p 3000:3000 -p 8080:8080 --name weather-app-new ${{ secrets.DOCKER_USER }}/weather-app-1
+        docker run -d -e API_KEY=${{ secrets.API_KEY }} -p 3000:3000 -p 8080:8080 --name weather-app-new ${{ secrets.DOCKER_USER }}/weather-app-1
   
   docker-push:
     runs-on: 
