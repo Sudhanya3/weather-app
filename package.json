@@ -1,10 +1,9 @@
 {
   "name": "weather-app",
   "version": "1.0.0",
-  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js"
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +12,17 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "node-fetch": "^3.3.2"
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "chai": "^5.1.2",
+    "chai-http": "^5.1.1",
+    "jsdom": "^25.0.1",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^11.0.1",
+    "nock": "^13.5.6",
+    "node-fetch": "^3.3.2",
+    "sinon": "^19.0.2",
+    "supertest": "^7.0.0"
   }
 }

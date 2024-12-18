@@ -10,6 +10,10 @@ RUN npm install express dotenv cors
 
 RUN npm install -g http-server
 
+RUN npm install --save-dev sinon node-fetch chai mocha jsdom chai-http
+
+RUN npm install jsdom-global --save-dev
+
 COPY . .
 
 EXPOSE 8080

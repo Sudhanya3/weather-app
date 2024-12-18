@@ -1,4 +1,4 @@
-name: Node.js Workflow
+name: Weather App Workflow
 
 on:
   push:
@@ -18,13 +18,40 @@ jobs:
     - 
       name: Checkout repo
       uses: actions/checkout@v4
-  
-  docker-actions:
+
+  testing:
+    runs-on: 
+      - self-hosted
+      - label-1
+    needs: checkout-repo
+    steps:
+    - 
+      name: Setup Node.js environment
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run Unit Tests
+      run: |
+        mkdir -p test-results
+        npx mocha test/server.test.js > test-results/server-test.log
+        npx mocha test/app.test.js > test-results/app-test.log
+    
+    - name: Upload Test Results Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: test-results/
+
+  docker-build:
     runs-on: 
       - self-hosted
       - label-1
 
-    needs: checkout-repo
+    needs: testing
 
     steps:
     - 
@@ -33,6 +60,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USER}}
         password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+        logout: false
 
     - 
       name: Build Docker image
@@ -40,11 +68,26 @@ jobs:
         export DOCKER_BUILDKIT=1
         docker build -t ${{ secrets.DOCKER_USER }}/weather-app-1:latest .
     
+
+  docker-run:
+    runs-on: 
+      - self-hosted
+      - label-1
+
+    needs: docker-build
+    steps:
     -
       name: Run docker container
       run: |
         docker run -d -e API_KEY=${{ secrets.API_KEY }} -p 3000:3000 -p 8080:8080 --name weather-app-latest ${{ secrets.DOCKER_USER }}/weather-app-1:latest
   
+  docker-push:
+    runs-on: 
+      - self-hosted
+      - label-1
+
+    needs: docker-run
+    steps:
     -
       name: Push Docker Image
       run: |
