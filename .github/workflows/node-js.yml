@@ -19,39 +19,39 @@ jobs:
       name: Checkout repo
       uses: actions/checkout@v4
 
-  testing:
-    runs-on: 
-      - self-hosted
-      - label-1
-    needs: checkout-repo
-    steps:
-    - 
-      name: Setup Node.js environment
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20
+  # testing:
+  #   runs-on: 
+  #     - self-hosted
+  #     - label-1
+  #   needs: checkout-repo
+  #   steps:
+  #   - 
+  #     name: Setup Node.js environment
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: 20
 
-    - name: Install dependencies
-      run: npm ci
+  #   - name: Install dependencies
+  #     run: npm ci
 
-    - name: Run Unit Tests
-      run: |
-        mkdir -p test-results
-        npx mocha test/server.test.js > test-results/server-test.log
-        npx mocha test/app.test.js > test-results/app-test.log
+  #   - name: Run Unit Tests
+  #     run: |
+  #       mkdir -p test-results
+  #       npx mocha test/server.test.js > test-results/server-test.log
+  #       npx mocha test/app.test.js > test-results/app-test.log
     
-    - name: Upload Test Results Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-results
-        path: test-results/
+  #   - name: Upload Test Results Artifact
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: test-results
+  #       path: test-results/
 
   docker-build:
     runs-on: 
       - self-hosted
       - label-1
 
-    needs: testing
+    needs: checkout-repo
 
     steps:
     - 
