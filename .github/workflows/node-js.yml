@@ -97,9 +97,14 @@ jobs:
     needs: docker-build
     steps:
     -
-      name: Run docker container
+      name: Debug IMAGE_TAG Value
+      run: echo "IMAGE_TAG= $IMAGE_TAG"
+
+    -
+      name: Run Docker Container
       run: |
-        docker run -d -e API_KEY=${{ secrets.API_KEY }} -p 3000:3000 -p 8080:8080 --name weather-app $IMAGE_TAG
+        echo "Running Docker with tag: $IMAGE_TAG"
+          docker run -d -e API_KEY=${{ secrets.API_KEY }} -p 3000:3000 -p 8080:8080 --name weather-app $IMAGE_TAG
   
   docker-push:
     runs-on: 
