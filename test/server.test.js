@@ -2,12 +2,12 @@ import * as chai from "chai";
 import supertest from "supertest";
 import dotenv from "dotenv";
 import { describe, it } from "mocha";
-import server from "../backend/server.js";
+import app from "../backend/server.js"; // Import the app instance
 
 dotenv.config();
 
 const { expect } = chai;
-const request = supertest(server); 
+const request = supertest(app);
 
 describe("Server API Tests", () => {
   describe("GET /api/getApiKey", () => {

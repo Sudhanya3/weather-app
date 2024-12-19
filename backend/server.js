@@ -25,9 +25,12 @@ app.get("/api/getApiKey", (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
 
 
 export default app;
