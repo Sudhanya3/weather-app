@@ -81,7 +81,8 @@ jobs:
       name: Build Docker image
       run: |
         export DOCKER_BUILDKIT=1
-        docker build -t ${{ secrets.DOCKER_USER }}/weather-app-1:${{ github.sha }} .
+        IMAGE_TAG=`${{ secrets.DOCKER_USER }}/weather-app-1:${{ github.sha }}`
+        docker build -t  $IMAGE_TAG .
     
 
   docker-run:
@@ -94,7 +95,9 @@ jobs:
     -
       name: Run Docker Container
       run: |
-        docker run -d -e API_KEY=${{ secrets.API_KEY }} -p 3000:3000 -p 8080:8080 --name weather-app ${{ secrets.DOCKER_USER }}/weather-app-1:${{ github.sha }}
+        CONTAINER_NAME="weather-app-${{ github.sha }}"
+        IMAGE_TAG=`${{ secrets.DOCKER_USER }}/weather-app-1:${{ github.sha }}`
+        docker run -d -e API_KEY=${{ secrets.API_KEY }} -p 3000:3000 -p 8080:8080 --name $CONTAINER_NAME $IMAGE_TAG
 
   docker-push:
     runs-on: 
@@ -106,4 +109,5 @@ jobs:
     -
       name: Push Docker Image
       run: |
-        docker push ${{ secrets.DOCKER_USER }}/weather-app-1:${{ github.sha }}
+        IMAGE_TAG=`${{ secrets.DOCKER_USER }}/weather-app-1:${{ github.sha }}`
+        docker push $IMAGE_TAG
