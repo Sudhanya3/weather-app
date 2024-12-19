@@ -51,6 +51,7 @@ jobs:
       run: |
         mkdir -p tests
         npx mocha test/server.test.js --reporter spec > tests/server-test.log
+        npx mocha test/app.test.js --reporter spec > tests/app-test.log
       env:
         API_KEY: ${{ secrets.API_KEY }}
 
