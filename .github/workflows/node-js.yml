@@ -41,15 +41,15 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        mkdir -p tests
-        npx mocha test/server.test.js > tests/server-test.log
-        npx mocha test/app.test.js > tests/app-test.log
+        
+        npx mocha test/server.test.js 
+        npx mocha test/app.test.js 
     
-    - name: Upload Test Results Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: tests
-        path: tests/
+    # - name: Upload Test Results Artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: tests
+    #     path: tests/
 
   # docker-build:
   #   runs-on: 
