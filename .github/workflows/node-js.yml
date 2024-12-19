@@ -79,17 +79,11 @@ jobs:
         password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
         logout: false
     
-    - name: Set Dynamic Tag
-      id: set_image_tag
-      run: |
-        echo "IMAGE_TAG=${{ secrets.DOCKER_USER }}/weather-app-1:${{ github.sha }}" >> $GITHUB_ENV
-        echo "::set-output name=image_tag::${{ secrets.DOCKER_USER }}/weather-app-1:${{ github.sha }}"
-    
     - 
       name: Build Docker image
       run: |
         export DOCKER_BUILDKIT=1
-        docker build -t ${{ steps.set_image_tag.outputs.image_tag }} .
+        docker build -t ${{ secrets.DOCKER_USER }}/weather-app-1:${{ github.sha }} .
     
 
   docker-run:
@@ -102,7 +96,7 @@ jobs:
     -
       name: Run Docker Container
       run: |
-        docker run -d -e API_KEY=${{ secrets.API_KEY }} -p 3000:3000 -p 8080:8080 --name weather-app ${{ needs.docker-build.outputs.image_tag }}
+        docker run -d -e API_KEY=${{ secrets.API_KEY }} -p 3000:3000 -p 8080:8080 --name weather-app ${{ secrets.DOCKER_USER }}/weather-app-1:${{ github.sha }}
 
   docker-push:
     runs-on: 
@@ -114,4 +108,4 @@ jobs:
     -
       name: Push Docker Image
       run: |
-        docker push ${{ needs.docker-build.outputs.image_tag }}
+        docker push ${{ secrets.DOCKER_USER }}/weather-app-1:${{ github.sha }}
