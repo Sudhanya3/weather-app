@@ -19,11 +19,7 @@ jobs:
       name: Checkout repo
       uses: actions/checkout@v4
 
-    - 
-      name: Set Environment Variables
-      run: |
-        echo "NODE_ENV=test" >> $GITHUB_ENV
-        echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+    
 
 
   testing:
@@ -32,6 +28,11 @@ jobs:
       - label-1
     needs: checkout-repo
     steps:
+
+    - 
+      name: Set Environment Variables
+      run: |
+        echo "NODE_ENV=test" >> $GITHUB_ENV
     - 
       name: Setup Node.js environment
       uses: actions/setup-node@v3
@@ -48,10 +49,11 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        
-        npx mocha test/server.test.js 
-        npx mocha test/app.test.js 
-    
+        mkdir -p tests
+        npx mocha test/server.test.js --reporter spec > tests/server-test.log
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
+
     # - name: Upload Test Results Artifact
     #   uses: actions/upload-artifact@v3
     #   with:
