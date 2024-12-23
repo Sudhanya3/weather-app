@@ -104,13 +104,13 @@ function updateBackground(weatherId) {
       body.style.backgroundImage = "url('/images/thunderstorm.jpg')";
       break;
     case weatherId >= 300 && weatherId < 400:
-      body.style.backgroundImage = "url('/images/drizzle.jpg')";
+      body.style.backgroundImage = "url('/images/drizzle.png')";
       break;
     case weatherId >= 500 && weatherId < 600:
-      body.style.backgroundImage = "url('/images/rain.jpg')";
+      body.style.backgroundImage = "url('/images/rain.jpeg')";
       break;
     case weatherId >= 600 && weatherId < 700:
-      body.style.backgroundImage = "url('/images/snow.jpg')";
+      body.style.backgroundImage = "url('/images/snow.png')";
       break;
     case weatherId >= 700 && weatherId < 800:
       body.style.backgroundImage = "url('/images/fog.jpg')";
