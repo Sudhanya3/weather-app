@@ -34,7 +34,6 @@ async function getWeatherData(city) {
   if (!response.ok) {
     throw new Error("Could not fetch weather data");
   }
-  console.log("API key received:", apiKey);
   return await response.json();
   
 }
@@ -72,6 +71,8 @@ function displayWeatherInfo(data) {
   card.appendChild(humidityDisplay);
   card.appendChild(descDisplay);
   card.appendChild(weatherEmoji);
+
+  updateBackground(id);
 }
 
 function getWeatherEmoji(weatherId) {
@@ -93,6 +94,39 @@ function getWeatherEmoji(weatherId) {
     default:
       return "❓";
   }
+}
+
+function updateBackground(weatherId) {
+  const body = document.body;
+
+  switch (true) {
+    case weatherId >= 200 && weatherId < 300:
+      body.style.backgroundImage = "url('/images/thunderstorm.jpg')";
+      break;
+    case weatherId >= 300 && weatherId < 400:
+      body.style.backgroundImage = "url('/images/drizzle.jpg')";
+      break;
+    case weatherId >= 500 && weatherId < 600:
+      body.style.backgroundImage = "url('/images/rain.jpg')";
+      break;
+    case weatherId >= 600 && weatherId < 700:
+      body.style.backgroundImage = "url('/images/snow.jpg')";
+      break;
+    case weatherId >= 700 && weatherId < 800:
+      body.style.backgroundImage = "url('/images/fog.jpg')";
+      break;
+    case weatherId === 800:
+      body.style.backgroundImage = "url('/images/clear.jpg')";
+      break;
+    case weatherId >= 801 && weatherId < 810:
+      body.style.backgroundImage = "url('/images/cloudy.jpg')";
+      break;
+    default:
+      body.style.backgroundImage = "url('/images/default.jpg')";
+  }
+
+  body.style.backgroundSize = "cover";
+  body.style.backgroundPosition = "center";
 }
 
 function displayError(message) {

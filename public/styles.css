@@ -32,7 +32,7 @@ button[type="submit"]:hover{
     background-color: hsl(122, 39%, 40%);
 }
 .card{
-    background: linear-gradient(180deg, hsl(210, 100%, 75%), hsl(40, 100%, 75%));
+    background: rgba(255, 255, 255, 0.258);    
     padding: 50px;
     border-radius: 10px;
     box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.5);
@@ -51,25 +51,31 @@ p{
 }
 .cityDisplay, .tempDisplay{
     font-size: 3.5rem;
-    font-weight: bold;
-    color: hsla(0, 0%, 0%, 0.8);
+    font-weight: normal;
+    color: #3e3d42;
     margin-bottom: 25px;
+    font-family: "Gill Sans", sans-serif;
 }
 .humidityDisplay{
-    font-weight: bold;
+    font-weight: normal;
+    font-family: "Gill Sans", sans-serif;
     margin-bottom: 25px;
+    color: #3e3d42
 }
 .descDisplay{
     font-style: italic;
-    font-weight: bold;
-    font-size: 2rem;
+    font-weight: normal;
+    font-family: "Gill Sans", sans-serif;
+    font-size: 1.6rem;
+    color: #3e3d42
 }
 .weatherEmoji{
     margin: 0;
     font-size: 7.5rem;
+    color-scheme: light;
 }
 .errorDisplay{
     font-size: 2.5rem;
     font-weight: bold;
-    color: hsla(0, 0%, 0%, 0.75);
+    color: hsla(0, 83%, 55%, 0.75);
 }

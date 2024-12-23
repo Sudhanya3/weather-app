@@ -19,16 +19,12 @@ jobs:
       name: Checkout repo
       uses: actions/checkout@v4
 
-    
-
-
   testing:
     runs-on: 
       - self-hosted
       - label-1
     needs: checkout-repo
     steps:
-
     - 
       name: Set Environment Variables
       run: |
@@ -65,9 +61,8 @@ jobs:
     runs-on: 
       - self-hosted
       - label-1
-
-    needs: testing
-    
+      
+    needs: testing    
     steps:
     - 
       name: Login to Docker Hub
